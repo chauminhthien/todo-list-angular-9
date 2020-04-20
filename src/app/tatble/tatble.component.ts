@@ -20,7 +20,7 @@ export class TatbleComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  clickEdit(item){ console.log(item)
+  clickEdit(item){
     const { id, name, level} = item;
     this.idEdit = id;
     this.dataEdit = { id, name, level };

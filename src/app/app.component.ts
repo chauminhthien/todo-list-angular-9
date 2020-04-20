@@ -10,10 +10,15 @@ export class AppComponent {
   data = [
     {
       id: +(new Date()),
-      name: "Tìm thấy mảnh vỡ máy bay rơi ở Iran làm 66 người chết",
+      name: "a",
       level: '0'
     }
   ]
+
+  control =  {
+    filter: '',
+    sort: 'name-asc',
+  }
 
   createNewTask(task){
     this.data.unshift({
@@ -33,4 +38,31 @@ export class AppComponent {
       return it;
     })
   }
+
+  handleFilter({key, value}){
+    this.control[key] = value
+  }
+
+  filterData(){
+    let data = [...this.data];
+    const { filter, sort } = this.control;
+    data = data.filter(item => (new RegExp(`^.*${this.replaceCharCode(filter)}.*$`, 'i')).test(item.name))
+
+    const [key, sortKey] = sort.split('-');
+
+    data = data.sort( (a, b) => {
+      // return -1;
+      if(sortKey === 'asc')
+        return a[key] > b[key] ? 1 : -1
+      return a[key] > b[key] ? -1 : 1
+    })
+
+    return data
+  }
+
+  replaceCharCode(s: string = '') {
+    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  }
+  
+  
 }
